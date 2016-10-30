@@ -1,0 +1,24 @@
+---
+# tasks file for docker-host
+
+- name: install apt-transport-https
+  package: name=apt-transport-https state=present
+- name: get docker repository key
+  apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D
+- name: add docker repository
+  apt_repository:
+    repo: "deb https://apt.dockerproject.org/repo {{ ansible_os_family | lower }}-{{ ansible_distribution_release }} main"
+    state: present
+- name: install packages
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - docker-engine
+    - python-pip
+    - python3-pip
+- name: upgrade pip
+  pip: name=pip state=latest
+- name: install packages from pip
+  pip: name={{ item }} state=present
+  with_items:
+    - docker-compose
+    - virtualenv
