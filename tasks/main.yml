@@ -10,7 +10,7 @@
     repo: "deb https://apt.dockerproject.org/repo {{ ansible_distribution | lower }}-{{ ansible_distribution_release }} main"
     state: present
 - name: install packages
-  apt: name={{ item }} state=present update_cache=yes
+  apt: name={{ item }} state=latest update_cache=yes
   with_items:
     - docker-engine
     - python-pip
