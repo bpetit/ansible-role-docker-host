@@ -15,8 +15,6 @@
     - docker-engine
     - python-pip
     - python3-pip
-- name: upgrade pip
-  pip: name=pip state=latest
 - name: install packages from pip
   pip: name={{ item }} state=present
   with_items:
